@@ -1,0 +1,20 @@
+---
+- hosts: centos
+  become: true
+  tasks:
+      - name: Updating  packages on control node
+        ansible.builtin.dnf:
+          name: "*"
+          state: latest
+          update_cache: yes
+        when: ansible_facts['os_family'] == "RedHat"
+      - name: Upgrade all packages
+        ansible.builtin.dnf:
+          name: "*"
+          state: latest
+        when: ansible_facts['os_family'] == "RedHat"
+      - name: Ensuring the Target is CentOS
+        ansible.builtin.fail:
+          msg: "This Playbook is only for CentOS Machines"
+       
+ 
